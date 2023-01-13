@@ -1,6 +1,6 @@
 import prisma from "../db"
 
-export const getAllPosts = async (req, res, next) => {
+export const getAllPosts = async (req, res) => {
     try {
         const allPosts = await prisma.post.findMany()
         res.json({data: allPosts})
@@ -9,7 +9,7 @@ export const getAllPosts = async (req, res, next) => {
     }
 }
 
-export const getAllUserPosts = async (req, res, next) => {
+export const getAllUserPosts = async (req, res) => {
     try {
         const posts = await prisma.post.findMany({
             where: {
@@ -23,7 +23,7 @@ export const getAllUserPosts = async (req, res, next) => {
     }
 }
 
-export const viewPost = async (req, res, next) => {
+export const viewPost = async (req, res) => {
     try {
         const post = await prisma.post.findFirst({
             where: {
@@ -38,7 +38,7 @@ export const viewPost = async (req, res, next) => {
     }
 }
 
-export const createNewPost = async (req, res, next) => {
+export const createNewPost = async (req, res) => {
     try {
         const newPost = await prisma.post.create({
             data: {
@@ -54,7 +54,7 @@ export const createNewPost = async (req, res, next) => {
     }
 }
 
-export const updatePost = async (req, res, next) => {
+export const updatePost = async (req, res) => {
     try {
         const updatedPost = await prisma.post.update({
             where: {
@@ -73,4 +73,23 @@ export const updatePost = async (req, res, next) => {
     } catch(e) {
 
     }
+}
+
+
+export const deletePost = async (req, res) => {
+    try {
+        const deletedPost = await prisma.post.delete({
+            where: {
+                id_belongsToId: {
+                    id: req.params.id,
+                    belongsToId: req.user.id
+                }
+            }
+        })
+    
+        res.json({data: deletedPost})
+    } catch (error) {
+        res.json({error})
+    }
+ 
 }
