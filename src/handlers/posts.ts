@@ -5,7 +5,7 @@ export const getAllPosts = async (req, res) => {
         const allPosts = await prisma.post.findMany()
         res.json({data: allPosts})
     } catch (e) {
-        
+        res.json({e})
     }
 }
 
@@ -19,7 +19,7 @@ export const getAllUserPosts = async (req, res) => {
 
         res.json({data: posts})
     } catch (e) {
-        
+        res.json({e})
     }
 }
 
@@ -34,7 +34,7 @@ export const viewPost = async (req, res) => {
 
         res.json({data: post})
     } catch (e) {
-        
+        res.json({e})
     }
 }
 
@@ -49,8 +49,8 @@ export const createNewPost = async (req, res) => {
         })
     
     res.json({data: newPost})
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        res.json({e})
     }
 }
 
@@ -71,7 +71,7 @@ export const updatePost = async (req, res) => {
 
         res.json({data: updatedPost})
     } catch(e) {
-
+        res.json({e})
     }
 }
 
@@ -88,8 +88,8 @@ export const deletePost = async (req, res) => {
         })
     
         res.json({data: deletedPost})
-    } catch (error) {
-        res.json({error})
+    } catch (e) {
+        res.json({e})
     }
  
 }
