@@ -53,3 +53,24 @@ export const createNewPost = async (req, res, next) => {
         console.log(error)
     }
 }
+
+export const updatePost = async (req, res, next) => {
+    try {
+        const updatedPost = await prisma.post.update({
+            where: {
+                id_belongsToId: {
+                    id: req.params.id,
+                    belongsToId: req.user.id
+                }   
+            },
+            data: {
+                title: req.body.title,
+                body: req.body.body
+            }
+        })
+
+        res.json({data: updatedPost})
+    } catch(e) {
+
+    }
+}
