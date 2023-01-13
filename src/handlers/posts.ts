@@ -23,18 +23,20 @@ export const getAllUserPosts = async (req, res, next) => {
     }
 }
 
-// export const viewPost = async (req, res, next) => {
-//     try {
-//         const post = await prisma.post.findFirst({
-//             where: {
-//                 belongsToId: req.user.id,
-//                 id: req.params.id
-//             }
-//         })
-//     } catch (e) {
+export const viewPost = async (req, res, next) => {
+    try {
+        const post = await prisma.post.findFirst({
+            where: {
+                belongsToId: req.user.id,
+                id: req.params.id
+            }
+        })
+
+        res.json({data: post})
+    } catch (e) {
         
-//     }
-// }
+    }
+}
 
 export const createNewPost = async (req, res, next) => {
     try {
