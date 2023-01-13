@@ -1,7 +1,7 @@
 import morgan from 'morgan'
 import cors from 'cors'
 import express from 'express'
-import { createNewUser, getUserDetails} from './handlers/user'
+import { createNewUser, getAllUsers, getUserDetails} from './handlers/user'
 import { protect } from './modules/auth'
 import  router  from './router'
 const app = express()
@@ -12,6 +12,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.post('/user', createNewUser)
+app.get('/users', getAllUsers)
 app.get('/viewUser', getUserDetails)
 app.use('/api', protect, router)
 export default app

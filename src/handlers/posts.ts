@@ -9,6 +9,33 @@ export const getAllPosts = async (req, res, next) => {
     }
 }
 
+export const getAllUserPosts = async (req, res, next) => {
+    try {
+        const posts = await prisma.post.findMany({
+            where: {
+                belongsToId: req.params.id
+            }
+        })
+
+        res.json({data: posts})
+    } catch (e) {
+        
+    }
+}
+
+// export const viewPost = async (req, res, next) => {
+//     try {
+//         const post = await prisma.post.findFirst({
+//             where: {
+//                 belongsToId: req.user.id,
+//                 id: req.params.id
+//             }
+//         })
+//     } catch (e) {
+        
+//     }
+// }
+
 export const createNewPost = async (req, res, next) => {
     try {
         const newPost = await prisma.post.create({

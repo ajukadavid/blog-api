@@ -29,3 +29,9 @@ export const getUserDetails = async (req, res, next) => {
 
     res.json({data: user})
 }
+
+export const getAllUsers = async (req, res, next) => {
+    const users = await prisma.user.findMany()
+
+    res.json({data: users})
+}
