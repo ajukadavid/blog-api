@@ -30,8 +30,30 @@ export const getUserDetails = async (req, res, next) => {
     res.json({data: user})
 }
 
-export const getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (res) => {
     const users = await prisma.user.findMany()
 
     res.json({data: users})
+}
+
+export const signInUser = async (req, res) => {
+   const user = await prisma.user.findUnique({
+        where: {
+            username: req.body.username
+        }
+   })
+//    let first_pass = await hashPassword(user.password)
+   console.log(user.password)
+
+   console.log(req.body.password)
+
+   const isValid = await comparePasword(req.body.password, user.password)
+
+   if(!isValid){
+        res.status(401)
+        res.json('Unauthorized User')
+        return
+   }
+   const token = createJwt(user)
+   res.json({token})
 }
