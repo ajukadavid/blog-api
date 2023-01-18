@@ -14,7 +14,6 @@ export const createNewUser = async (req, res, next) => {
       res.json({token})
     }
     catch (e) {
-        console.log("error", e)
       res.json({ message: 'errrorr' });
     }
 }
