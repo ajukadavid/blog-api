@@ -10,7 +10,6 @@ export const createNewUser = async (req, res, next) => {
           username: req.body.username,
         },
       });
-
       const token = createJwt(user)
       res.json({token})
     }
@@ -26,7 +25,6 @@ export const getUserDetails = async (req, res, next) => {
             username: req.body.username
         }
     })
-
     res.json({data: user})
 }
 
@@ -46,9 +44,7 @@ export const signInUser = async (req, res) => {
    console.log(user.password)
 
    console.log(req.body.password)
-
    const isValid = await comparePasword(req.body.password, user.password)
-
    if(!isValid){
         res.status(401)
         res.json('Unauthorized User')

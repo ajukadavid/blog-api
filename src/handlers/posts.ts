@@ -16,7 +16,6 @@ export const getAllUserPosts = async (req, res) => {
                 belongsToId: req.params.id
             }
         })
-
         res.json({data: posts})
     } catch (e) {
         res.json({e})
@@ -31,7 +30,6 @@ export const viewPost = async (req, res) => {
                 id: req.params.id
             }
         })
-
         res.json({data: post})
     } catch (e) {
         res.json({e})
@@ -47,7 +45,6 @@ export const createNewPost = async (req, res) => {
                 belongsToId: req.user.id
             }
         })
-    
     res.json({data: newPost})
     } catch (e) {
         res.json({e})
@@ -68,7 +65,6 @@ export const updatePost = async (req, res) => {
                 body: req.body.body
             }
         })
-
         res.json({data: updatedPost})
     } catch(e) {
         res.json({e})
@@ -86,7 +82,6 @@ export const deletePost = async (req, res) => {
                 }
             }
         })
-    
         res.json({data: deletedPost})
     } catch (e) {
         res.json({e})
