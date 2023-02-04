@@ -13,25 +13,24 @@ export const createNewUser = async (req, res, next) => {
       const token = createJwt(user)
       res.json({token})
     }
-    catch (e) {
-      console.log(e)
-      res.json({ message: 'errrorr' });
+    catch (error) {
+      res.json({ error });
     }
 }
 
 export const getUserDetails = async (req, res, next) => {
-    const user = await prisma.user.findUnique({
+    const data = await prisma.user.findUnique({
         where: {
             username: req.body.username
         }
     })
-    res.json({data: user})
+    res.json({ data })
 }
 
 export const getAllUsers = async (req, res) => {
-    const users = await prisma.user.findMany()
+    const data = await prisma.user.findMany()
 
-    res.json({data: users})
+    res.json({ data })
 }
 
 export const signInUser = async (req, res) => {
@@ -40,11 +39,6 @@ export const signInUser = async (req, res) => {
             username: req.body.username
         }
    })
-  //   let first_pass = await hashPassword(user.password)
-  //   let second_pass = await hashPassword(req.body.password)
-  //  console.log(first_pass, second_pass)
-
-   console.log(req.body.password)
    const isValid = await comparePasword(req.body.password, user.password)
    if(!isValid){
         res.status(401)
