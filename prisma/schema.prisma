@@ -15,23 +15,24 @@ model User {
   email   String   @unique
   username    String @unique
   password String
+  image String?
   posts   Post[]
-  profile Profile?
 }
 
-model Profile {
-  id     String    @id @default(uuid())
-  bio    String
-  user   User   @relation(fields: [userId], references: [id])
-  userId String    @unique
-}
 
 model Post {
   id         String        @id @default(uuid())
   createdAt  DateTime   @default(now())
   title      String     
   body       String
+  image       String?
+  comments Comment[]
   belongsToId String
   belongsTo   User     @relation(fields: [belongsToId], references: [id])
   @@unique([id, belongsToId])
+}
+model Comment {
+  id     String @id @default(uuid())
+  Post   Post @relation(fields: [postId], references: [id]) // A comment can have one post
+  postId String
 }
