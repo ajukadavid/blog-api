@@ -15,11 +15,14 @@ export const createNewUser = async (req, res, next) => {
       res.json({token})
     }
     catch (error) {
-      res.json({ error });
+     let message = error.code === 'P2002' ? 'Email Already exists! please sign in.' : error
+      res.status(400)
+      res.json({ error: message });
     }
 }
 
 export const getUserDetails = async (req, res, next) => {
+  let user;
   try {
      const data = await prisma.user.findUnique({
         where: {
@@ -27,10 +30,11 @@ export const getUserDetails = async (req, res, next) => {
         },
         
     })
+    user = data
     res.json({ username: data.username, image: data.image, email: data.email, id: data.id, created_at: data.createdAt });
 
   } catch(error){
-    res.json({ error })
+      !user ? res.json({ error: 'User Does Not Exist!' }) : error
   }
    
 }
@@ -51,7 +55,7 @@ export const signInUser = async (req, res) => {
    const isValid = await comparePasword(req.body.password, user.password)
    if(!isValid){
         res.status(401)
-        res.json('Unauthorized User')
+        res.json('Wrong password, check your password and try again.')
         return
    }
    const token = createJwt(user)
