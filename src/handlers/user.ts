@@ -1,6 +1,6 @@
 import prisma from '../db'
 import { comparePasword, hashPassword, createJwt } from '../modules/auth'
-
+import { imageHandler } from '../modules/image-handler';
 export const createNewUser = async (req, res, next) => {
     try {
       const user = await prisma.user.create({
@@ -8,6 +8,7 @@ export const createNewUser = async (req, res, next) => {
           email: req.body.email,
           password: await hashPassword(req.body.password),
           username: req.body.username,
+          image: await imageHandler(req)
         },
       });
       const token = createJwt(user)
@@ -22,9 +23,10 @@ export const getUserDetails = async (req, res, next) => {
     const data = await prisma.user.findUnique({
         where: {
             username: req.body.username
-        }
+        },
+        
     })
-    res.json({ data })
+    res.json({ username: data.username, image: data.image, email: data.email, id: data.id, created_at: data.createdAt });
 }
 
 export const getAllUsers = async (req, res) => {
