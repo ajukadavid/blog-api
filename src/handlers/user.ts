@@ -50,7 +50,6 @@ export const getUserDetails = async (req, res, next) => {
 
 export const getAllUsers = async (req, res) => {
     const data = await prisma.user.findMany()
-    res.send(200)
     res.json({ data })
 }
 
