@@ -29,4 +29,7 @@ app.post("/signIn", body('username').exists(), body('password').exists, signInUs
 app.get("/users", getAllUsers);
 app.get("/viewUser", getUserDetails);
 app.use("/api", protect, router);
+app.get('/', (req, res) => {
+    res.json({data: 'home route'})
+})
 export default app;
