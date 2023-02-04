@@ -11,7 +11,7 @@ import {
 import { protect } from "./services/auth-service";
 import router from "./router";
 import multer from "multer";
-import { body, oneOf, validationResult } from "express-validator";
+import { body } from "express-validator";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });

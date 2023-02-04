@@ -5,8 +5,8 @@ import { validateEmail } from '../services/auth-service'
 import { handleSendEmail } from '../services/email-service'
 
 export const createNewUser = async (req, res, next) => {
-  let email = await validateEmail(req.body.email);
-  if (email.valid) {
+  // let email = await validateEmail(req.body.email);
+
     try {
       const user = await prisma.user.create({
         data: {
@@ -27,10 +27,7 @@ export const createNewUser = async (req, res, next) => {
       res.status(400);
       res.json({ error: message });
     }
-  } else {
-    res.status(400)
-    res.json({message: 'Invalid email'})
-  }
+
 };
 
 export const getUserDetails = async (req, res, next) => {
@@ -53,7 +50,7 @@ export const getUserDetails = async (req, res, next) => {
 
 export const getAllUsers = async (req, res) => {
     const data = await prisma.user.findMany()
-
+    res.send(200)
     res.json({ data })
 }
 
