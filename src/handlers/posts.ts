@@ -1,5 +1,5 @@
 import prisma from "../db"
-import { imageHandler } from '../modules/image-handler';
+import { imageHandler } from '../services/image-handler';
 
 export const getAllPosts = async (req, res) => {
     try {
