@@ -1,4 +1,5 @@
 import prisma from "../db"
+import { imageHandler } from '../modules/image-handler';
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -42,6 +43,7 @@ export const createNewPost = async (req, res) => {
             data: {
                 body: req.body.body,
                 title: req.body.title,
+                image: await imageHandler(req),
                 belongsToId: req.user.id
             }
         })
