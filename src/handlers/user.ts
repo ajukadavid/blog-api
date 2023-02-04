@@ -1,7 +1,10 @@
 import prisma from '../db'
 import { comparePasword, hashPassword, createJwt } from '../modules/auth'
 import { imageHandler } from '../modules/image-handler';
+import { validateEmail } from '../modules/auth'
 export const createNewUser = async (req, res, next) => {
+    let email = validateEmail(req.body.email)
+    console.log(email)
     try {
       const user = await prisma.user.create({
         data: {

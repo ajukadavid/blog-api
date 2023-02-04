@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import { validate } from 'deep-email-validator'
 
 export const comparePasword = (password, hash) => {
     return bcrypt.compare(password, hash)
@@ -46,4 +47,9 @@ export const protect = (req, res, next) => {
         res.json({message: 'Not valid token'})
         return
     }
+}
+
+export const validateEmail = async (email) => {
+    let res = await validate(email)
+    return res
 }
