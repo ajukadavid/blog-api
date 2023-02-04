@@ -6,7 +6,7 @@ export const createNewUser = async (req, res, next) => {
       const user = await prisma.user.create({
         data: {
           email: req.body.email,
-          password: req.body.password,
+          password: await hashPassword(req.body.password),
           username: req.body.username,
         },
       });
@@ -14,6 +14,7 @@ export const createNewUser = async (req, res, next) => {
       res.json({token})
     }
     catch (e) {
+      console.log(e)
       res.json({ message: 'errrorr' });
     }
 }
@@ -39,8 +40,9 @@ export const signInUser = async (req, res) => {
             username: req.body.username
         }
    })
-//    let first_pass = await hashPassword(user.password)
-   console.log(user.password)
+  //   let first_pass = await hashPassword(user.password)
+  //   let second_pass = await hashPassword(req.body.password)
+  //  console.log(first_pass, second_pass)
 
    console.log(req.body.password)
    const isValid = await comparePasword(req.body.password, user.password)
