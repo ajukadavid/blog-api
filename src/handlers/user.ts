@@ -20,13 +20,19 @@ export const createNewUser = async (req, res, next) => {
 }
 
 export const getUserDetails = async (req, res, next) => {
-    const data = await prisma.user.findUnique({
+  try {
+     const data = await prisma.user.findUnique({
         where: {
             username: req.body.username
         },
         
     })
     res.json({ username: data.username, image: data.image, email: data.email, id: data.id, created_at: data.createdAt });
+
+  } catch(error){
+    res.json({ error })
+  }
+   
 }
 
 export const getAllUsers = async (req, res) => {
@@ -36,7 +42,8 @@ export const getAllUsers = async (req, res) => {
 }
 
 export const signInUser = async (req, res) => {
-   const user = await prisma.user.findUnique({
+  try {
+       const user = await prisma.user.findUnique({
         where: {
             username: req.body.username
         }
@@ -49,4 +56,8 @@ export const signInUser = async (req, res) => {
    }
    const token = createJwt(user)
    res.json({token})
+  } catch (error) {
+    res.json({error})
+  }
+
 }
