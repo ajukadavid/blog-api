@@ -24,12 +24,10 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.post("/signUp", body('email').isEmail(), upload.single("image"), createNewUser);
+app.post("/signUp", upload.single("image"), createNewUser);
 app.post("/signIn", body('username').exists(), body('password').exists, signInUser);
 app.get("/users", getAllUsers);
 app.get("/viewUser", getUserDetails);
 app.use("/api", protect, router);
-app.get('/', (req, res) => {
-    res.json({data: 'home route'})
-})
+app.get('/', getAllUsers)
 export default app;

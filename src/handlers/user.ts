@@ -19,13 +19,8 @@ export const createNewUser = async (req, res, next) => {
       const token = createJwt(user);
       res.json({ token });
     } catch (error) {
-      console.log(error);
-      let message =
-        error.code === "P2002"
-          ? "Email Already exists! please sign in."
-          : error;
       res.status(400);
-      res.json({ error: message });
+      res.json({ error });
     }
 
 };
@@ -39,11 +34,10 @@ export const getUserDetails = async (req, res, next) => {
         },
         
     })
-    user = data
     res.json({ username: data.username, image: data.image, email: data.email, id: data.id, created_at: data.createdAt });
 
   } catch(error){
-      !user ? res.json({ error: 'User Does Not Exist!' }) : error
+      console.log(error)
   }
    
 }
