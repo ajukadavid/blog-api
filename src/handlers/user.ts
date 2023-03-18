@@ -20,6 +20,7 @@ export const createNewUser = async (req, res, next) => {
       res.json({ token });
     } catch (error) {
       res.status(400);
+      console.log(error)
       res.json({ error });
     }
 
