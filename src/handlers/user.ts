@@ -13,7 +13,7 @@ export const createNewUser = async (req, res, next) => {
           email: req.body.email,
           password: await hashPassword(req.body.password),
           username: req.body.username,
-          image: await imageHandler(req),
+          image: await imageHandler(req.body.image),
         },
       });
       const token = createJwt(user);
