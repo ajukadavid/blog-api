@@ -1,12 +1,7 @@
 import prisma from '../db'
 import { comparePasword, hashPassword, createJwt } from '../services/auth-service'
-import { imageHandler } from '../services/image-handler';
-import { validateEmail } from '../services/auth-service'
-import { handleSendEmail } from '../services/email-service'
 
 export const createNewUser = async (req, res, next) => {
-  // let email = await validateEmail(req.body.email);
-
     try {
       const user = await prisma.user.create({
         data: {
@@ -20,8 +15,12 @@ export const createNewUser = async (req, res, next) => {
       res.json({ token });
     } catch (error) {
       res.status(400);
-      console.log(error)
-      res.json({ error });
+      let errMsg
+      if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
+        let val = error.meta.target[0] === 'username' ? 'username' : 'email'
+        errMsg = `${val} must be unique`
+      }
+      res.json({ error: errMsg });
     }
 
 };
