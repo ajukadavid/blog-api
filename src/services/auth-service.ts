@@ -51,5 +51,5 @@ export const protect = (req, res, next) => {
 
 export const validateEmail = async (email) => {
     let res = await validate(email)
-    return res
+    return res.valid
 }

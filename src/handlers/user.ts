@@ -1,24 +1,31 @@
 import prisma from '../db'
-import { comparePasword, hashPassword, createJwt } from '../services/auth-service'
+import { comparePasword, hashPassword, createJwt, validateEmail } from '../services/auth-service'
 
 export const createNewUser = async (req, res, next) => {
     try {
-      const user = await prisma.user.create({
-        data: {
-          email: req.body.email,
-          password: await hashPassword(req.body.password),
-          username: req.body.username,
-          image: await req.body.image,
-        },
-      });
-      const token = createJwt(user);
-      res.json({ token });
+      let emailCheck = await validateEmail(req.body.email)
+      if(emailCheck){
+        const user = await prisma.user.create({
+          data: {
+            email: req.body.email,
+            password: await hashPassword(req.body.password),
+            username: req.body.username,
+            image: await req.body.image,
+          },
+        });
+        const token = createJwt(user);
+        res.json({ token });
+      } else {
+        res.status(400)
+        res.json({error: 'Invalid Email Address.'})
+      }
+    
     } catch (error) {
       res.status(400);
       let errMsg
       if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
         let val = error.meta.target[0] === 'username' ? 'username' : 'email'
-        errMsg = `${val} must be unique`
+        errMsg = `${val} already exists.`
       }
       res.json({ error: errMsg });
     }
