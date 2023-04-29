@@ -21,7 +21,7 @@ export const createNewUser = async (req, res, next) => {
         let val = error.meta.target[0] === 'username' ? 'username' : 'email'
         errMsg = `${val} already exists.`
       }
-      res.json({ error });
+      res.json({ error:  errMsg});
     }
 
 };
