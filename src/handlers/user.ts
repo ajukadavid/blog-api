@@ -5,6 +5,7 @@ export const createNewUser = async (req, res, next) => {
     try {
       let emailCheck = await validateEmail(req.body.email)
       if(emailCheck){
+        console.log(emailCheck)
         const user = await prisma.user.create({
           data: {
             email: req.body.email,
@@ -17,17 +18,18 @@ export const createNewUser = async (req, res, next) => {
         res.json({ token });
       } else {
         res.status(400)
+        console.log(emailCheck, 'from here')
         res.json({error: 'Invalid Email Address.'})
       }
     
     } catch (error) {
       res.status(400);
-      let errMsg
-      if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
-        let val = error.meta.target[0] === 'username' ? 'username' : 'email'
-        errMsg = `${val} already exists.`
-      }
-      res.json({ error: errMsg });
+      // let errMsg 
+      // if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
+      //   let val = error.meta.target[0] === 'username' ? 'username' : 'email'
+      //   errMsg = `${val} already exists.`
+      // }
+      res.json({ error });
     }
 
 };
