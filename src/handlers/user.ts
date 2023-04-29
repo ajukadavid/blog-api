@@ -3,8 +3,6 @@ import { comparePasword, hashPassword, createJwt, validateEmail } from '../servi
 
 export const createNewUser = async (req, res, next) => {
     try {
-      let emailCheck = await validateEmail(req.body.email)
-      if(emailCheck){
         const user = await prisma.user.create({
           data: {
             email: req.body.email,
@@ -15,18 +13,14 @@ export const createNewUser = async (req, res, next) => {
         });
         const token = createJwt(user);
         res.json({ token });
-      } else {
-        res.status(400)
-        res.json({error: 'Invalid Email Address.'})
-      }
     
     } catch (error) {
       res.status(400);
-      // let errMsg 
-      // if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
-      //   let val = error.meta.target[0] === 'username' ? 'username' : 'email'
-      //   errMsg = `${val} already exists.`
-      // }
+      let errMsg 
+      if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
+        let val = error.meta.target[0] === 'username' ? 'username' : 'email'
+        errMsg = `${val} already exists.`
+      }
       res.json({ error });
     }
 
