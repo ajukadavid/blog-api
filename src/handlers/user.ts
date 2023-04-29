@@ -5,7 +5,6 @@ export const createNewUser = async (req, res, next) => {
     try {
       let emailCheck = await validateEmail(req.body.email)
       if(emailCheck){
-        console.log(emailCheck)
         const user = await prisma.user.create({
           data: {
             email: req.body.email,
@@ -18,7 +17,6 @@ export const createNewUser = async (req, res, next) => {
         res.json({ token });
       } else {
         res.status(400)
-        console.log(emailCheck, 'from here')
         res.json({error: 'Invalid Email Address.'})
       }
     
@@ -46,7 +44,7 @@ export const getUserDetails = async (req, res, next) => {
     res.json({ username: data.username, image: data.image, email: data.email, id: data.id, created_at: data.createdAt });
 
   } catch(error){
-      console.log(error)
+      res.json({ error })
   }
    
 }
