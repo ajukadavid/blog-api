@@ -65,8 +65,10 @@ export const signInUser = async (req, res) => {
         return
    }
    const token = createJwt(user)
+   console.log(token)
    res.json({token})
   } catch (error) {
+    console.log(error)
     res.json({error})
   }
 
