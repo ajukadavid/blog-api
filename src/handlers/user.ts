@@ -15,13 +15,14 @@ export const createNewUser = async (req, res, next) => {
         res.json({ token });
     
     } catch (error) {
+      console.log(error)
       res.status(400);
-      let errMsg 
-      if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
-        let val = error.meta.target[0] === 'username' ? 'username' : 'email'
-        errMsg = `${val} already exists.`
-      }
-      res.json({ error:  errMsg});
+      // let errMsg 
+      // if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
+      //   let val = error.meta.target[0] === 'username' ? 'username' : 'email'
+      //   errMsg = `${val} already exists.`
+      // }
+      res.json({ error});
     }
 
 };
@@ -38,6 +39,7 @@ export const getUserDetails = async (req, res, next) => {
     res.json({ username: data.username, image: data.image, email: data.email, id: data.id, created_at: data.createdAt });
 
   } catch(error){
+    console.log(error)
       res.json({ error })
   }
    
@@ -56,6 +58,7 @@ export const signInUser = async (req, res) => {
         }
    })
    const isValid = await comparePasword(req.body.password, user.password)
+   console.log(isValid)
    if(!isValid){
         res.status(401)
         res.json('Wrong password, check your password and try again.')
