@@ -57,19 +57,15 @@ export const signInUser = async (req, res) => {
             username: req.body.username
         }
    })
-   console.log(req.body.password)
    const isValid = await comparePasword(req.body.password, user.password)
-   console.log(isValid)
    if(!isValid){
         res.status(401)
         res.json('Wrong password, check your password and try again.')
         return
    }
    const token = createJwt(user)
-   console.log(token)
    res.json({token})
   } catch (error) {
-    console.log(error)
     res.status(400)
     res.json({error})
   }
