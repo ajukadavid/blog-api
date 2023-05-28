@@ -1,18 +1,21 @@
 const client = require("@mailchimp/mailchimp_marketing");
 
 client.setConfig({
-  apiKey: "50d10d253f8eda6da9da8b73d534ebc9-us21",
+  apiKey: process.env.MAILCHIMP_KEY,
   server: "us21",
 });
 
 export const register = async (req, res) => {
     try {
-        const response = await client.lists.addListMember("l4c6c36f732", {
-            email_address: "Ebony_Brekke@gmail.com",
-            status: "Subscribed",
-          });
+      const response = await client.lists.addListMember("4c6c36f732", {
+        email_address: req.body.email,
+        status: "subscribed",
+      });
           console.log(response);
+          res.json({data: response})
     } catch (e) {
         res.json({e})
     }
 }
+
+
