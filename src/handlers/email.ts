@@ -10,6 +10,7 @@ export const register = async (req, res) => {
       const response = await client.lists.addListMember("4c6c36f732", {
         email_address: req.body.email,
         status: "subscribed",
+        tags: "Member"
       });
           console.log(response);
           res.json({data: response})
