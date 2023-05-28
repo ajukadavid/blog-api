@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.post("/signUp", upload.single("image"), createNewUser);
 app.post("/signIn", signInUser);
 app.get("/users", getAllUsers);
-app.post("/checking", register)
+app.post("/registerMail", register)
 app.get("/viewUser", getUserDetails);
 app.use("/api", protect, router);
 app.get('/', (req, res) => {

@@ -12,7 +12,6 @@ export const register = async (req, res) => {
         status: "subscribed",
         tags: "Member"
       });
-          console.log(response);
           res.json({data: response})
     } catch (e) {
         res.json({e})
