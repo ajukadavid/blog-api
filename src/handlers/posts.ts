@@ -48,6 +48,7 @@ export const createNewPost = async (req, res) => {
         })
     res.json({data: newPost})
     } catch (e) {
+        res.status(400)
         console.log(e)
         res.json({e})
     }
