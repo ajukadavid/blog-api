@@ -1,5 +1,4 @@
 import prisma from "../db"
-import { imageHandler } from '../services/image-handler';
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -43,12 +42,13 @@ export const createNewPost = async (req, res) => {
             data: {
                 body: req.body.body,
                 title: req.body.title,
-                image: await imageHandler(req),
+                image: req.body.image,
                 belongsToId: req.user.id
             }
         })
     res.json({data: newPost})
     } catch (e) {
+        console.log(e)
         res.json({e})
     }
 }
