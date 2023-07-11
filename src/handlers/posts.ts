@@ -32,6 +32,7 @@ export const viewPost = async (req, res) => {
         })
         res.json({data: post})
     } catch (e) {
+        console.log(e)
         res.json({e})
     }
 }
