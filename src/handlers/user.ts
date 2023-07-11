@@ -27,8 +27,7 @@ export const createNewUser = async (req, res, next) => {
 
 };
 
-export const getUserDetails = async (req, res, next) => {
-  let user;
+export const getUserDetails = async (req, res,) => {
   try {
      const data = await prisma.user.findUnique({
         where: {
@@ -66,6 +65,7 @@ export const signInUser = async (req, res) => {
    const token = createJwt(user)
    res.json({token})
   } catch (error) {
+    console.log(error)
     res.status(400)
     res.json({error})
   }
