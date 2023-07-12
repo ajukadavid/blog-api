@@ -44,9 +44,11 @@ export const createNewPost = async (req, res) => {
                 body: req.body.body,
                 title: req.body.title,
                 image: req.body.image,
-                belongsToId: req.user.id
+                belongsToId: req.user.id,
+                user: req.user.username
             }
         })
+    console.log(newPost)
     res.json({data: newPost})
     } catch (e) {
         res.status(400)

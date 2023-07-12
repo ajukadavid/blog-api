@@ -3,12 +3,12 @@ import { createNewPost, deletePost, viewPost, getAllPosts, getAllUserPosts, upda
 
 const router = Router()
 
-router.get('/posts', getAllPosts) //get all the posts
-router.get('/post/user/:id', getAllUserPosts) // get all the posts for one user
-router.get('/post/view/:id', viewPost) // view one post
-router.put('/post/update/:id', updatePost) //update one 
-router.post('/post/create', createNewPost) // create a post
-router.delete('/post/delete/:id', deletePost) //delete a post
+router.get('/posts', getAllPosts) 
+router.get('/post/user/:id', getAllUserPosts)
+router.get('/post/view/:id', viewPost) 
+router.put('/post/update/:id', updatePost)  
+router.post('/post/create', createNewPost)
+router.delete('/post/delete/:id', deletePost) 
 
 
 export default router
