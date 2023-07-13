@@ -12,12 +12,16 @@ export const getAllPosts = async (req, res) => {
 export const getAllUserPosts = async (req, res) => {
     try {
         const posts = await prisma.post.findMany({
+            skip: 3,
+            take: 5,
             where: {
                 belongsToId: req.params.id
             }
         })
         res.json({data: posts})
     } catch (e) {
+        res.status(400)
+
         res.json({e})
     }
 }
@@ -30,7 +34,7 @@ export const viewPost = async (req, res) => {
                 id: req.params.id
             }
         })
-        res.json({data: post})
+        res.json({data: post, val: 'this is a value'})
     } catch (e) {
         console.log(e)
         res.json({e})
