@@ -17,12 +17,12 @@ export const createNewUser = async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(400);
-      // let errMsg 
-      // if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
-      //   let val = error.meta.target[0] === 'username' ? 'username' : 'email'
-      //   errMsg = `${val} already exists.`
-      // }
-      res.json({ error});
+      let errMsg 
+      if(error.code === 'P2002' && error.meta.target[0] === 'username' || error.meta.target[0] === 'email'){
+        let val = error.meta.target[0] === 'username' ? 'username' : 'email'
+        errMsg = `${val} already exists.`
+      }
+      res.json({ error: errMsg });
     }
 
 };
@@ -56,18 +56,23 @@ export const signInUser = async (req, res) => {
             username: req.body.username
         }
    })
+   if(!user) {
+    res.status(401)
+    res.json({error: 'User does not exist, please check username and try again.'})
+    return
+   }
    const isValid = await comparePasword(req.body.password, user.password)
    if(!isValid){
         res.status(401)
-        res.json('Wrong password, check your password and try again.')
+        res.json({error: 'Wrong password, check your password and try again.'})
         return
    }
    const token = createJwt(user)
    res.json({token})
   } catch (error) {
-    console.log(error)
-    res.status(400)
-    res.json({error})
+    // console.log(error)
+    // res.status(400)
+    // res.json({error: error})
   }
 
 }
