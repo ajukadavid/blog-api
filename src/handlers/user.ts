@@ -46,7 +46,7 @@ export const getUserDetails = async (req, res,) => {
 
 export const getAllUsers = async (req, res) => {
     const data = await prisma.user.findMany()
-    res.json({ data })
+    res.json({ data: 'hello' })
 }
 
 export const signInUser = async (req, res) => {
